@@ -19,12 +19,12 @@
                 <div class="col-2 center">
                     <a href="/"><img src="/img/logo.png" class=" logo-style"></a>
                 </div>
-                <% if(locals.name) { %>
+                <% if(locals.name && locals.userUID) { %>
                     <div class="col-2 offset-5 center">
                         <a class="mb-0 ms-5 sign-out" href="/signout">Sign Out</a>
                     </div> 
                     <div class="col-3 center">
-                        <h5>Welcome back, <%=name%></h5>   
+                        <a class="profile-link" href="/userProfile/<%= userUID %>"><h5>Welcome back, <%= name %></h5></a>
                         <% } else { %>
                             <div class="col-1 offset-9 center">
                             <a href="/checkLogin" class="mb-0 login">Sign In</a>
@@ -49,15 +49,15 @@
             </div>
         </div>
     </section>
-    <section id="blogCollection" class="p-5">
+    <section id="blogCollection" class="p-1">
         <div class="center container p-5">
             <div class="pfont-style">
                 <h2 class="section-heading">Blog Collections</h2><br>
-                <p>
+                <p class="mb-4">
                     Explore a curated library of blogs written by our community. Whether you're looking for insights, tutorials, stories, or the latest updates, you'll find it all here.
                     Dive in, get inspired, and join the conversation!
                 </p>
-                <a id="BlogCollections" href="/BlogCollections">Click Here</a>
+                <a id="BlogCollections" href="/BlogCollections">╰┈➤Click Here</a>
 
             </div>
             <div class="blend" data-aos-duration="500" data-aos-offset="300" data-aos="fade-left" data-aos-easing="ease-in-quart">
@@ -125,7 +125,7 @@
                     </form>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; 2025 Bloggify. All rights reserved.</p>
             </div>

@@ -9,14 +9,35 @@
 <body>
     <section id="preview-section" >
         <div class="profile-sidebar" id="profile-sidebar">
-
-            <img src="/img/profile-logo.png" height="130" id="profile-logo">
-            <h3><%= username %></h3>
-            <a href="/userProfile/<%= userUID %>">
-                <div class="profile-link">
-                    VISIT PROFILE
-                </div>
-            </a>
+            <div class="center">
+                <a href="/"><img src="/img/logo.png" class=" logo-style"></a>
+            </div>
+            <div class="flex-column">
+                <img src="/img/profile-logo.png" height="130" id="profile-logo">
+                <h3 class="xxx"><%= username %></h3>
+                <a href="/userProfile/<%= userUID %>">
+                    <div class="profile-link">
+                        VISIT PROFILE
+                    </div>
+                </a>
+                <!-- Delete -->
+                 <% if (currUserID === userUID) { %>
+                    <div class="flex-center top2 gap1">
+                        <a class="delete" ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="26" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                          </svg>
+                        </a>
+                        <a>
+                            <div class="update-link">
+                                Update
+                            </div>
+                        </a>
+                    </div>
+                 <% } %>
+                <!-- Till Here -->
+            </div>
         </div>
         <div id="content" class="bgCover">
             <div class="blog-area">
@@ -34,7 +55,22 @@
             return `bg${num}`;
         }
         let bgClass= chooseBackground();
-            document.getElementById("content").classList.add(bgClass);
+        document.getElementById("content").classList.add(bgClass);
+        document.querySelector(".delete").addEventListener("click", ()=>{
+            let ans = prompt("Are you sure (Y, N)");
+            ans = ans.toLowerCase();
+            if(ans == 'y'){
+                alert("Blog Deleted Successfully");
+                window.location.href ="/userProfile/"+"<%= userUID %>"+"/"+"<%= postID %>"+"/delete";
+            }
+        })
+        document.querySelector(".update-link").addEventListener("click", ()=>{
+            let ans = prompt("Are you sure (Y, N)");
+            ans = ans.toLowerCase();
+            if(ans == 'y'){
+                window.location.href ="/userProfile/"+"<%= userUID %>"+"/"+"<%= postID %>"+"/update";
+            }
+        })
     </script>
 </body>
 </html>

@@ -25,12 +25,11 @@
     <section id="main-body">
         <form action="/publishPost/<%= userUID %>" method="POST">
             <div class="creating-area" oninput="putText()">
-                <input type="text" placeholder="Title" id="title" name="title" required>
+                <input type="text" placeholder="Title" id="title" name="title" required value="<%= title %>">
                 <hr>
                 <div class="blogBody flex-center">
-                    <textarea id="blogBody" name="blogBody" placeholder="Start writing..." required></textarea>
+                    <textarea id="blogBody" name="blogBody" placeholder="Start writing..." required><%= blogBody %></textarea>
                 </div>
-                
             </div>
             <div class="sidebar flex-column">
                 <div id="buttons">
@@ -57,10 +56,17 @@
     </section>
     <section id="preview-section" class="hidden">
         <div class="profile-sidebar" id="profile-sidebar">
-            <img src="/img/profile-logo.png" height="130" id="profile-logo">
-            <h3><%= username %></h3>
-            <div class="profile-link">
-                <a href="/userProfile/<%= userUID %>">VISIT PROFILE</a>
+            <div class="center">
+                <a href="/"><img src="/img/logo.png" class=" logo-style"></a>
+            </div>
+            <div class="flex-column">
+                <img src="/img/profile-logo.png" height="130" id="profile-logo">
+                <h3><%= username %></h3>
+                <a href="/userProfile/<%= userUID %>">
+                    <div class="profile-link">
+                        VISIT PROFILE
+                    </div>
+                </a>
             </div>
         </div>
         <div id="content" class="bgCover">

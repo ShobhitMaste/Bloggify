@@ -7,7 +7,7 @@ import { getAuth, createUserWithEmailAndPassword,
 
 import {
     getFirestore, collection, getDocs, addDoc, doc,
-    setDoc, collectionGroup, getDoc
+    setDoc, collectionGroup, getDoc, deleteDoc
 } from "firebase/firestore";
 
 import { initializeApp } from "firebase/app";
@@ -46,10 +46,12 @@ server.use(express.static("public"));
 server.get("/", (req, res) => {
     const auth = getAuth();
     const user = auth.currentUser;
+    // let userUID = user.uid;
     if(user){
         let username = user.displayName;
+        let userUID = user.uid;
         isLogged = true;
-        res.render("index.ejs", {name: username});
+        res.render("index.ejs", {name: username, userUID});
     } else {
         console.log("No user is currently logged in.");
         res.render("index.ejs");
@@ -166,7 +168,9 @@ server.get("/createBlog/:userUID", (req, res)=>{
     res.render("createBlog.ejs", {
         username : auth.currentUser.displayName,
         date: date,
-        userUID : auth.currentUser.uid
+        userUID : auth.currentUser.uid,
+        title: "",
+        blogBody: ""
     });
 });
 
@@ -226,13 +230,19 @@ server.get("/Post/:userUID/:postID", (req, res)=>{
     let userUID = req.params.userUID;
     let postID = req.params.postID;
     const postRef = doc(db, "users", userUID, "posts", postID);
+    const auth = getAuth();
+    let user = auth.currentUser;
+    let currUserID;
+    if(user){
+        currUserID = user.uid;
+    }
     getDoc(postRef)
     .then((snapshot)=>{
         const blogTitle = snapshot.data().title;
         const postingDate = snapshot.data().postingDate;
         const blogBody = snapshot.data().blogBody.replace(/\r\n/g, "<br>");
         const username = snapshot.data().author;
-        res.render('previewBlog.ejs', {userUID, blogTitle, blogBody, postingDate, username});
+        res.render('previewBlog.ejs', {userUID, blogTitle, blogBody, postingDate, username, postID, currUserID});
     })
     .catch((err) =>{
         console.log(err.message);
@@ -270,6 +280,50 @@ server.get("/userProfile/:userUID", (req, res)=>{
         res.render("ProfilePage.ejs", {userBlogs, postCount, displayName, joinDate, name});
     })
 });
+
+server.get("/userProfile/:userUID/:postID/delete", (req, res)=>{
+    const userUID = req.params.userUID;
+    const postID = req.params.postID;
+    const postRef = doc(db, "users", userUID, "posts", postID);
+    deleteDoc(postRef)
+    .then(()=>{
+        res.redirect("/userProfile/" + userUID);
+    })
+})
+
+server.get("/userProfile/:userUID/:postID/update", (req, res)=>{
+    const userUID = req.params.userUID;
+    const postID = req.params.postID;
+    const postRef = doc(db, "users", userUID, "posts", postID);
+    let title = "";
+    let blogBody = "";
+    let date = "";
+    const auth = getAuth();
+    if(!auth.currentUser.displayName){
+        res.send("<h1>Error 404 Cannot Find Your File</h1>");
+    }
+    
+    getDoc(postRef)
+    .then((docSnap)=>{
+        title = docSnap.data().title;
+        blogBody = docSnap.data().blogBody;
+        date = docSnap.data().postingDate;
+    })
+    .catch((err)=>{
+        console.log(err.message);
+    })
+    .then(()=>{
+        deleteDoc(postRef)
+        .then(()=>{
+            res.render("createBlog.ejs", {
+                username : auth.currentUser.displayName,
+                date: date,
+                userUID : auth.currentUser.uid,
+                title, blogBody
+            });
+        })
+    })
+})
 
 function getDateTime() {
     const d = new Date();
