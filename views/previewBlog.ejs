@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/styles/createBlog.css" rel="stylesheet">
+</head>
+<body>
+    <section id="preview-section" >
+        <div class="profile-sidebar" id="profile-sidebar">
+
+            <img src="/img/profile-logo.png" height="130" id="profile-logo">
+            <h3><%= username %></h3>
+            <a href="/userProfile/<%= userUID %>">
+                <div class="profile-link">
+                    VISIT PROFILE
+                </div>
+            </a>
+        </div>
+        <div id="content" class="bgCover">
+            <div class="blog-area">
+                <div>
+                    <h2 id="blog-title"><%= blogTitle %></h2>
+                    <p id="date" class="transparancy"><%= postingDate %></p>
+                    <p id="blog-area-content" class="transparancy"><%- blogBody %></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function chooseBackground(){
+            let num = Math.floor((Math.random() * 5) + 1);
+            return `bg${num}`;
+        }
+        let bgClass= chooseBackground();
+            document.getElementById("content").classList.add(bgClass);
+    </script>
+</body>
+</html>

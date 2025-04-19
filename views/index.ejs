@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloggify</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <section id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-2 center">
+                    <a href="/"><img src="/img/logo.png" class=" logo-style"></a>
+                </div>
+                <% if(locals.name) { %>
+                    <div class="col-2 offset-5 center">
+                        <a class="mb-0 ms-5 sign-out" href="/signout">Sign Out</a>
+                    </div> 
+                    <div class="col-3 center">
+                        <h5>Welcome back, <%=name%></h5>   
+                        <% } else { %>
+                            <div class="col-1 offset-9 center">
+                            <a href="/checkLogin" class="mb-0 login">Sign In</a>
+                         <% } %>
+                </div>
+            </div>
+            <div class="mt-5 flex-column">
+                <p class="heading mainfont">Publish Your Passions, your way</p>
+                <p class="header-secondary">Create Unique Blogs and Publish Them</p>
+                <a href="/checkLogin"><button class="create-button">Create Now</button></a>
+            </div>
+        </div>
+    </section>
+    <section id="memories" class="p-5">
+        <div class="center container p-5">
+            <div class="pfont-style">
+                <h2 class="section-heading">Hang onto your memories</h2><br>
+                <p>Save the moments that matter. Bloggify lets you safely store thousands of posts, photos, and more with Google.</p>
+            </div>
+            <div class="blend" data-aos-duration="500" data-aos-offset="300" data-aos="fade-left" data-aos-easing="ease-in-quart">
+                <img src="/img/section2.png">
+            </div>
+        </div>
+    </section>
+    <section id="blogCollection" class="p-5">
+        <div class="center container p-5">
+            <div class="pfont-style">
+                <h2 class="section-heading">Blog Collections</h2><br>
+                <p>
+                    Explore a curated library of blogs written by our community. Whether you're looking for insights, tutorials, stories, or the latest updates, you'll find it all here.
+                    Dive in, get inspired, and join the conversation!
+                </p>
+                <a id="BlogCollections" href="/BlogCollections">Click Here</a>
+
+            </div>
+            <div class="blend" data-aos-duration="500" data-aos-offset="300" data-aos="fade-left" data-aos-easing="ease-in-quart">
+                <img src="/img/bc.png">
+            </div>
+        </div>
+    </section>
+    <section id="aboutus" class="p-5">
+        <div class="center container p-5">
+            <div class="pfont-style">
+                <h2 class="section-heading">About Us</h2><br>
+                <p>At Bloggify, we believe that every memory holds a story worth sharing. Our platform is dedicated
+                   to individuals who cherish their experiences and wish to share them with the world.​Our mission
+                   is to empower storytellers by providing an intuitive platform that transforms moments into lasting
+                   narratives. We aim to foster a community where authenticity thrives and every voice is heard.
+                </p>
+            </div>
+            <div class="blend" data-aos-duration="500" data-aos-offset="300" data-aos="fade-left" data-aos-easing="ease-in-quart">
+                <img src="/img/section3.png">
+            </div>
+        </div>
+    </section>
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-column">
+                    <h3>Bloggify</h3>
+                    <p>Publish your passions, your way. Create unique blogs and share your stories with the world.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-2 footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#memories">Features</a></li>
+                        <li><a href="#blogCollection">Collections</a></li>
+                        <li><a href="#aboutus">About</a></li>
+                        <li><a href="/checkLogin">Sign In</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3 footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Blogging Tips</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3 footer-column">
+                    <h4>Contact Us</h4>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <input type="text" placeholder="Message..." required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bloggify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- <script src="/scripts/animationsForWebsite.js"></script> -->
+    <script src="/scripts/aos.js"></script> 
+    <script>
+        AOS.init({
+            once: false,
+        });
+    </script>
+</body>
+</html>

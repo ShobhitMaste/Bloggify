@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreateBlog</title>
+    <link href="/styles/createBlog.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="stopOverflow">
+    <header>
+        <div class="flex-center gap2">
+            <a href="/" class="flex-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                </svg>
+            </a>
+            <img src="/img/justlogo.png" alt="logo" height="42">
+        </div>
+        <p>A place for your voice, <u><%= username %></u> </p>
+    </header>
+    <hr class="tophr">
+    <section id="main-body">
+        <form action="/publishPost/<%= userUID %>" method="POST">
+            <div class="creating-area" oninput="putText()">
+                <input type="text" placeholder="Title" id="title" name="title" required>
+                <hr>
+                <div class="blogBody flex-center">
+                    <textarea id="blogBody" name="blogBody" placeholder="Start writing..." required></textarea>
+                </div>
+                
+            </div>
+            <div class="sidebar flex-column">
+                <div id="buttons">
+                    <button id="preview" type="button" onclick="togglePreview(event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                        </svg>
+                      Preview
+                    </button>
+                    <button id="publish">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                        </svg>
+                      Publish
+                    </button>
+                </div>
+                <div class="postSettings">
+                    <h3>Publish Date - </h3>
+                    <p>Date - <%= date %></p>
+                </div>
+            </div>
+        </form>
+    </section>
+    <section id="preview-section" class="hidden">
+        <div class="profile-sidebar" id="profile-sidebar">
+            <img src="/img/profile-logo.png" height="130" id="profile-logo">
+            <h3><%= username %></h3>
+            <div class="profile-link">
+                <a href="/userProfile/<%= userUID %>">VISIT PROFILE</a>
+            </div>
+        </div>
+        <div id="content" class="bgCover">
+            <div class="blog-area">
+                <div>
+                    <h2 id="blog-title">Title</h2>
+                    <p id="date" class="transparancy"><%= date %></p>
+                    <p id="blog-area-content" class="transparancy">Content Here...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script defer>
+        setTimeout(()=>{
+            const top = document.querySelector("header");
+            top.scrollIntoView({
+                behavior:"smooth",
+                block: "start"
+            });
+        }, 500);
+        function togglePreview(event){
+            event.preventDefault();
+            document.querySelector("body").classList.remove("stopOverflow");
+            const target = document.getElementById("preview-section")
+            target.classList.remove("hidden");
+            target.scrollIntoView({
+                behavior:"smooth",
+                block: "start"
+            });
+            }
+            let bgClass= chooseBackground();
+            document.getElementById("content").classList.add(bgClass);
+        function chooseBackground(){
+            let num = Math.floor((Math.random() * 5) + 1);
+            return `bg${num}`;
+        }
+        function putText(){
+            const blogArea = document.getElementById("blog-area-content");
+            const blogTitle = document.getElementById("blog-title");
+            blogArea.innerHTML = document.getElementById("blogBody").value.replace(/\n/g, '<br>');
+            blogTitle.textContent = document.getElementById("title").value;
+        }
+    </script>
+</body>
+
+</html>

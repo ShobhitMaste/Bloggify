@@ -1,0 +1,239 @@
+/* #BC382E */
+    
+    .logo-style{
+        height:90px;
+        margin:0px;
+        border-radius: 20px;
+        margin-top:10px;
+    }
+
+    .sign-out{
+        color:white;
+        font-size: 20px;
+        text-decoration: none;
+        transition: font-size 0.1s ease-in-out;
+        font-weight: 600;
+        position: relative;
+        left:80px;
+        bottom:3px;
+    }
+
+    .sign-out:hover{
+        font-size: 22px;
+        color:white;
+    }
+
+    h5{
+        color:white;
+        font-size: 20px;
+        text-decoration: none;
+        transition: font-size 0.1s ease-in-out;
+        font-weight: 600;
+        position: relative;
+        left:80px;
+    }
+
+    .login{
+        color:white;
+        font-size: 20px;
+        text-decoration: none;
+        transition: font-size 0.1s ease-in-out;
+        font-weight: 600;
+    }
+
+    .login:hover{
+        font-size: 22px;
+        color:white;
+    }
+
+    .center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .heading{
+        font-size:35px;
+        color:white;
+    }
+
+    #header{
+        background-image:url('/img/background2.jpg');
+        background-size:cover;
+        background-repeat: no-repeat;
+        height:100vh;
+    }
+
+    .header-secondary{
+        font-size: 20px;
+        font-weight: 600;
+        color: white;
+    }
+    .flex-column{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    body{
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        overflow-x: hidden; 
+    }
+    .create-button{
+        background-color: rgb(255, 128, 0);
+        width: 150px;
+        height:50px;
+        border-radius: 5px;
+        border:0px;
+        color:white;
+        font-size:1rem;
+        font-weight: 600;
+    }
+    .create-button:hover{
+        background-color: rgb(255, 150, 45);
+    }
+
+    #memories{
+        background-color: #F8F4A6;
+        color:#00272B;
+        overflow-x: hidden; 
+    }
+    .blend{
+        mix-blend-mode:multiply;
+        
+    }
+    .blend img{
+        transform:translate(250px);
+    }
+    #aboutus{
+        background-color: #BDF7B7;
+        color:#00272B;
+        overflow-x: hidden; 
+    }
+    #blogCollection{
+        overflow-x: hidden; 
+        background-color: #ADB9E3;
+        color:#00272B;
+    }
+    #BlogCollections{
+        font-size: 24px;
+        color:#00272B;
+        text-decoration: none;
+        transition: color 0.3s ease, font-size 0.3s ease;
+    }
+
+    #BlogCollections:hover{
+        font-size: 30px;
+        color: white;
+    }
+
+    .pfont-style{
+        font-weight: 500;
+    }
+    .section-heading{
+        font-size:40px;
+    }
+    .gap2{
+        gap:20px;
+    }
+    /* Footer Styles */
+.footer-section {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 60px 0 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer-column h3,
+.footer-column h4 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer-column p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #34495e;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+
+.social-icons a:hover {
+    background-color: #3498db;
+    transform: translateY(-3px);
+}
+
+.newsletter-form input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.newsletter-form button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.newsletter-form button:hover {
+    background-color: #2980b9;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    border-top: 1px solid #34495e;
+    color: #bdc3c7;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-column {
+        margin-bottom: 30px;
+    }
+}
