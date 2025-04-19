@@ -241,3 +241,7 @@ form{
   .gap1{
     gap:30px;
   }
+  .scrollable-div {
+    overflow: auto;
+    height: 94%;
+  }
