@@ -244,4 +244,5 @@ form{
   .scrollable-div {
     overflow: auto;
     height: 94%;
+    padding-right: 20px;;
   }
