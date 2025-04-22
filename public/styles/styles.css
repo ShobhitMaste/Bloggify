@@ -234,87 +234,68 @@
 }
 
 @media (max-width: 768px) {
-    .footer-column {
-        margin-bottom: 30px;
+    body{
+        overflow-x: hidden;
     }
-}
-@media (max-width: 992px) {
-    .blend img {
-        transform: translate(100px);
-    }
-}
-
-@media (max-width: 768px) {
     .logo-style {
-        height: 70px;
-        margin-top: 8px;
+        height: 60px;
+        margin-top: 5px;
     }
 
-    .sign-out, h5, .login {
+    .sign-out,
+    .login,
+    h5 {
         font-size: 16px;
         left: 0;
-        position: static;
-        margin-left: 15px;
+        bottom: 0;
+        text-align: center;
     }
 
-    .col-2.offset-5.center, 
-    .col-3.center, 
-    .col-1.offset-9.center {
-        width: auto;
-        flex: 1;
-        margin-left: 0;
-        padding: 0 10px;
+    .sign-out:hover,
+    .login:hover {
+        font-size: 18px;
+    }
+
+    #header {
+        height: auto;
+        padding: 40px 0;
+        text-align: center;
     }
 
     .heading {
-        font-size: 28px;
-        text-align: center;
+        font-size: 26px;
         padding: 0 15px;
     }
 
     .header-secondary {
         font-size: 16px;
-        text-align: center;
+        padding: 0 15px;
     }
 
-    #header {
-        height: auto;
-        min-height: 100vh;
-        padding-bottom: 40px;
-        background-position: center;
-    }
-
-    .container > .row {
-        flex-wrap: nowrap;
-    }
-
-    .center.container.p-5 {
-        flex-direction: column;
-        padding: 2rem 1rem !important;
-    }
-
-    .pfont-style {
-        text-align: center;
-        margin-bottom: 2rem;
+    .create-button {
+        width: 130px;
+        height: 45px;
+        font-size: 0.9rem;
     }
 
     .blend img {
-        transform: none !important;
+        transform: none;
         width: 100%;
-        max-width: 350px;
-        margin: 0 auto;
-        display: block;
+        height: auto;
+        margin-top: 20px;
     }
 
     .section-heading {
-        font-size: 32px;
+        font-size: 30px;
+    }
+
+    .pfont-style p,
+    .pfont-style h2 {
         text-align: center;
     }
 
-    #BlogCollections {
-        display: block;
-        text-align: center;
-        margin-top: 1rem;
+    .footer-section {
+        padding: 40px 20px 0;
     }
 
     .footer-column {
@@ -322,43 +303,55 @@
         text-align: center;
     }
 
-    .social-icons {
-        justify-content: center;
-    }
-
-    .newsletter-form {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 576px) {
-    .logo-style {
-        height: 60px;
-    }
-
-    .heading {
-        font-size: 24px;
-    }
-
-    .section-heading {
-        font-size: 28px;
-    }
-
-    .create-button {
-        width: 120px;
-        height: 40px;
-        font-size: 0.9rem;
+    .footer-links li {
+        display: inline-block;
+        margin: 0 10px 10px;
     }
 
     .footer-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
+        text-align: center;
     }
 
-    .footer-links li {
-        margin-bottom: 5px;
+    .social-icons {
+        text-align: center;
+    }
+
+    .newsletter-form input,
+    .newsletter-form button {
+        font-size: 14px;
+    }
+
+    .footer-bottom {
+        font-size: 12px;
+        margin-top: 20px;
+    }
+
+    .flex-column {
+        padding: 10px 15px;
+    }
+
+    .container,
+    .row {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .center {
+        flex-direction: column;
+    }
+
+    .col-2,
+    .col-3,
+    .col-1,
+    .col-md-4,
+    .col-md-3,
+    .col-md-2 {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #BlogCollections {
+        font-size: 20px;
     }
 
     #BlogCollections:hover {
@@ -366,20 +359,3 @@
     }
 }
 
-@media (max-width: 400px) {
-    .heading {
-        font-size: 22px;
-    }
-
-    .header-secondary {
-        font-size: 14px;
-    }
-
-    .section-heading {
-        font-size: 24px;
-    }
-
-    .logo-style {
-        height: 50px;
-    }
-}
