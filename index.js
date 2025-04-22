@@ -7,20 +7,21 @@ import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, sig
 import {getFirestore, collection, getDocs, addDoc, doc,setDoc, collectionGroup, getDoc, deleteDoc} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import cookieSession from "cookie-session";
+import dotenv from "dotenv";
+dotenv.config();
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDc_Fbgbi_ZFHgNuvtF4MtUabBjSt6DAck",
-    authDomain: "bloggify-shobhit-singh.firebaseapp.com",
-    projectId: "bloggify-shobhit-singh",
-    storageBucket: "bloggify-shobhit-singh.firebasestorage.app",
-    messagingSenderId: "742810597834",
-    appId: "1:742810597834:web:7358939038bfac99663733"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const port = 3000;
-const serviceAccount = JSON.parse(fs.readFileSync("./serviceAccountKey.json", "utf8"));
+const port = process.env.PORT || 3000;
+const serviceAccount = JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDS, "utf-8"));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
