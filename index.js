@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import admin from "firebase-admin";
 import fs from "fs";
-import path from "path";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, signOut, updateProfile} from "firebase/auth";
 import {getFirestore, collection, getDocs, addDoc, doc,setDoc, collectionGroup, getDoc, deleteDoc} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -63,7 +62,7 @@ server.get("/", (req, res) => {
         .then((decodedToken)=>{
             let username = decodedToken.name;
             let userUID = decodedToken.uid;
-            console.log(decodedToken);
+            // console.log(decodedToken);
             res.render("index.ejs", {name: username, userUID});
 
         })
