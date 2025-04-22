@@ -8,8 +8,8 @@ import {getFirestore, collection, getDocs, addDoc, doc,setDoc, collectionGroup, 
 import { initializeApp } from "firebase/app";
 import cookieSession from "cookie-session";
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -21,7 +21,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const port = process.env.PORT || 3000;
-const serviceAccount = JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDS, "utf-8"));
+const serviceAccount = JSON.parse(fs.readFileSync("/etc/secrets/serviceAccountKey.json", "utf-8"));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
