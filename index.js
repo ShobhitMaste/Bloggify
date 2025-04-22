@@ -1,27 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
-
-import { getAuth, createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, signOut, updateProfile
-} from "firebase/auth";
-
-import {
-    getFirestore, collection, getDocs, addDoc, doc,
-    setDoc, collectionGroup, getDoc, deleteDoc
-} from "firebase/firestore";
-
+import admin from "firebase-admin";
+import fs from "fs";
+import path from "path";
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, signOut, updateProfile} from "firebase/auth";
+import {getFirestore, collection, getDocs, addDoc, doc,setDoc, collectionGroup, getDoc, deleteDoc} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import sillyname from "sillyname";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC8gFbOJMkfnpxZzMrIeDlpo3KsVE_Q_kI",
-//   authDomain: "blog-website-by-shobhitmaste.firebaseapp.com",
-//   projectId: "blog-website-by-shobhitmaste",
-//   storageBucket: "blog-website-by-shobhitmaste.firebasestorage.app",
-//   messagingSenderId: "73308837632",
-//   appId: "1:73308837632:web:f8eb7a357d3489c0eac5e5",
-//   measurementId: "G-ERZRBCJHV8"
-// };
+import cookieSession from "cookie-session";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDc_Fbgbi_ZFHgNuvtF4MtUabBjSt6DAck",
@@ -30,28 +15,62 @@ const firebaseConfig = {
     storageBucket: "bloggify-shobhit-singh.firebasestorage.app",
     messagingSenderId: "742810597834",
     appId: "1:742810597834:web:7358939038bfac99663733"
-  };
+};
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const port = 3000;
+const serviceAccount = JSON.parse(fs.readFileSync("./serviceAccountKey.json", "utf8"));
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+});
+
 const server = express();
 const db = getFirestore(); //initialize firestore service
 
-
-let isLogged = false;
-
-server.use(bodyParser.urlencoded({extended:  true}));
 server.use(express.static("public"));
+server.use(bodyParser.urlencoded({extended:  true}));
+server.use(cookieSession({
+    name: 'session',
+    keys: ['mysessionkey'],
+    maxAge: 24*60*60*1000,  //1 day
+}));
+
+function checkAuth(req, res, next) {
+    const idToken = req.session.idToken;
+    if(!idToken){
+        console.log("Not logged in, First log in");
+        return res.redirect("/login");
+    } 
+        
+
+    admin.auth().verifyIdToken(idToken)
+    .then((decodedToken)=>{
+        req.user = decodedToken;
+        next();
+    })
+    .catch(err => {
+        console.log("Auth error:", err);
+        res.redirect("/login");
+      });
+}
 
 server.get("/", (req, res) => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    // let userUID = user.uid;
-    if(user){
-        let username = user.displayName;
-        let userUID = user.uid;
-        isLogged = true;
-        res.render("index.ejs", {name: username, userUID});
+    if(req.session.idToken){
+        admin.auth().verifyIdToken(req.session.idToken)
+        .then((decodedToken)=>{
+            let username = decodedToken.name;
+            let userUID = decodedToken.uid;
+            console.log(decodedToken);
+            res.render("index.ejs", {name: username, userUID});
+
+        })
+        .catch(error => {
+            console.error("Invalid token", error);
+            req.session = null;
+            res.render("index.ejs");
+        });
     } else {
         console.log("No user is currently logged in.");
         res.render("index.ejs");
@@ -72,29 +91,29 @@ server.post("/register", (req, res) => {
     let user_name = req.body.user_name;
     console.log(email, password, user_name);
     let joinDate = getDateTime();
-    const auth = getAuth();
+    let userUID;
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         const user = userCredential.user;
-        return updateProfile(user, {
-            displayName: user_name
-        });
+        userUID = user.uid;
+        return user.getIdToken()
+        .then((token)=>{
+            req.session.idToken = token;
+            return updateProfile(user, {
+                displayName: user_name
+            });
+        }) 
     })
     .then(()=>{
-        //add user to database
-        const userID = auth.currentUser.uid;
-        const userRef = doc(db, "users", userID);
-         setDoc(userRef, {
-            uid: userID,
+        const userRef = doc(db, "users", userUID);
+        return setDoc(userRef, {
+            uid: userUID,
             displayName: user_name,
             joinDate
-         })
-         .then(()=>{
-            console.log("User added to database successfully");   
          });
-         return true;
     })
     .then(()=>{
+        console.log("User added to database successfully");   
         res.redirect("/login");
     })
     .catch((error) => {
@@ -110,14 +129,16 @@ server.post("/login", (req, res)=>{
     let email = req.body.email;
     let password = req.body.password;
     console.log(email, password);
-    const auth = getAuth();
-    
+
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("success");
+        return userCredential.user.getIdToken()
+        
+    })
+    .then((idToken)=>{
+        req.session.idToken = idToken;
         res.redirect("/");
-    
+        console.log("success");
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -129,18 +150,23 @@ server.post("/login", (req, res)=>{
 });
 
 server.get("/checkLogin", (req, res)=>{
-    if(isLogged){
-        const auth = getAuth();
-        let userID = auth.currentUser.uid;
-        res.redirect("/createBlog/" + userID);
+    if(req.session.idToken){
+        admin.auth().verifyIdToken(req.session.idToken)
+        .then((decodedToken)=>{
+            console.log("User logged in with UID:", decodedToken.uid);
+            res.redirect("/createBlog/" + decodedToken.uid);
+        })
+        .catch((error) => {
+            // If token verification fails
+            console.error("Token verification failed:", error);
+            res.redirect("/login");
+        });
     } else {
         res.redirect("/login");
     }
 });
 server.get("/checkLogin2", (req, res)=>{
-    if(isLogged){
-        const auth = getAuth();
-        let userID = auth.currentUser.uid;
+    if(req.session.idToken){
         res.redirect("/");
     } else {
         res.redirect("/login");
@@ -148,42 +174,27 @@ server.get("/checkLogin2", (req, res)=>{
 });
 
 server.get("/signout", (req, res)=>{
-    const auth = getAuth(); 
-    signOut(auth).then(() => {
-        isLogged = false;
-        res.redirect("/");
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-    });
+    req.session = null;
+    res.redirect("/login");
 });
 
-server.get("/createBlog/:userUID", (req, res)=>{
-    const auth = getAuth();
+server.get("/createBlog/:userUID", checkAuth, (req, res)=>{
     let date = getDateTime();
-    if(!auth.currentUser.displayName){
-        res.send("<h1>Error 404 Cannot Find Your File</h1>");
-    }
     res.render("createBlog.ejs", {
-        username : auth.currentUser.displayName,
+        username : req.user.name,
         date: date,
-        userUID : auth.currentUser.uid,
+        userUID : req.user.uid,
         title: "",
         blogBody: ""
     });
 });
 
-server.listen(port, ()=>{
-    console.log("Connected to Server Successfully to port " + port);
-});
-
-server.post("/publishPost/:userUID", (req, res)=>{
+server.post("/publishPost/:userUID", checkAuth, (req, res)=>{
     let title = req.body.title;
     let blogBody = req.body.blogBody;
     let userUID = req.params.userUID;
-    const auth = getAuth();
-    const username = auth.currentUser.displayName;
+    //decode here ??? why did i write this i dont remember
+    const username = req.user.name;
     const postRef = collection(db, "users", userUID, "posts");
     addDoc(postRef, {
         title: title,
@@ -210,7 +221,6 @@ server.post("/publishPost/:userUID", (req, res)=>{
 server.get("/BlogCollections", (req, res)=>{
     let blogArray = [];
     const blogsRef = collectionGroup(db, "posts");
-    const auth = getAuth();
     getDocs(blogsRef)
     .then((snapshot)=>{
         snapshot.docs.forEach((doc)=>{
@@ -230,11 +240,12 @@ server.get("/Post/:userUID/:postID", (req, res)=>{
     let userUID = req.params.userUID;
     let postID = req.params.postID;
     const postRef = doc(db, "users", userUID, "posts", postID);
-    const auth = getAuth();
-    let user = auth.currentUser;
-    let currUserID;
-    if(user){
-        currUserID = user.uid;
+    let currUserID = "";
+    if(req.session.idToken){
+        admin.auth().verifyIdToken(req.session.idToken)
+        .then((decodesToken)=>{
+            currUserID = decodesToken.uid;
+        })
     }
     getDoc(postRef)
     .then((snapshot)=>{
@@ -258,10 +269,11 @@ server.get("/userProfile/:userUID", (req, res)=>{
     let joinDate;
     const postRef = collection(db, "users", userUID, "posts");
     const docRef = doc(db, "users", userUID);
-    const auth = getAuth();
-    let user = auth.currentUser;
-    if(user){
-        name = user.displayName;
+    if(req.session.idToken){
+        admin.auth().verifyIdToken(req.session.idToken)
+        .then((decodesToken)=>{
+            name = decodesToken.name;
+        })
     }
     getDoc(docRef)
     .then((snapshot)=>{
@@ -281,48 +293,57 @@ server.get("/userProfile/:userUID", (req, res)=>{
     })
 });
 
-server.get("/userProfile/:userUID/:postID/delete", (req, res)=>{
+server.get("/userProfile/:userUID/:postID/delete", checkAuth, (req, res)=>{
     const userUID = req.params.userUID;
     const postID = req.params.postID;
-    const postRef = doc(db, "users", userUID, "posts", postID);
-    deleteDoc(postRef)
-    .then(()=>{
-        res.redirect("/userProfile/" + userUID);
-    })
-})
-
-server.get("/userProfile/:userUID/:postID/update", (req, res)=>{
-    const userUID = req.params.userUID;
-    const postID = req.params.postID;
-    const postRef = doc(db, "users", userUID, "posts", postID);
-    let title = "";
-    let blogBody = "";
-    let date = "";
-    const auth = getAuth();
-    if(!auth.currentUser.displayName){
-        res.send("<h1>Error 404 Cannot Find Your File</h1>");
-    }
-    
-    getDoc(postRef)
-    .then((docSnap)=>{
-        title = docSnap.data().title;
-        blogBody = docSnap.data().blogBody;
-        date = docSnap.data().postingDate;
-    })
-    .catch((err)=>{
-        console.log(err.message);
-    })
-    .then(()=>{
+    if(req.user.uid == userUID){
+        const postRef = doc(db, "users", userUID, "posts", postID);
         deleteDoc(postRef)
         .then(()=>{
-            res.render("createBlog.ejs", {
-                username : auth.currentUser.displayName,
-                date: date,
-                userUID : auth.currentUser.uid,
-                title, blogBody
-            });
+            res.redirect("/userProfile/" + userUID);
         })
-    })
+    } else {
+        res.redirect("/naughtyBoy");
+    }
+})
+
+server.get("/userProfile/:userUID/:postID/update", checkAuth, (req, res)=>{
+    const userUID = req.params.userUID;
+    const postID = req.params.postID;
+    const postRef = doc(db, "users", userUID, "posts", postID);
+    if(req.user.uid == userUID){
+        let title = "";
+        let blogBody = "";
+        let date = "";
+        getDoc(postRef)
+        .then((docSnap)=>{
+            title = docSnap.data().title;
+            blogBody = docSnap.data().blogBody;
+            date = docSnap.data().postingDate;
+        })
+        .catch((err)=>{
+            console.log(err.message);
+        })
+        .then(()=>{
+            deleteDoc(postRef)
+            .then(()=>{
+                res.render("createBlog.ejs", {
+                    username : req.user.name,
+                    date: date,
+                    userUID : req.user.uid,
+                    title, blogBody
+                });
+            })
+        })
+    } else {
+        res.redirect("/naughtyBoy");
+    }
+})
+
+server.get("/naughtyBoy", (req, res) => {
+    res.send(
+        "<h1>Naughty Boy ban riya hai!!</h1>"
+    );
 })
 
 function getDateTime() {
@@ -333,4 +354,6 @@ function getDateTime() {
     return `${day}-${month}-${year}`;
 }
 
-
+server.listen(port, ()=>{
+    console.log("Connected to Server Successfully to port " + port);
+});
