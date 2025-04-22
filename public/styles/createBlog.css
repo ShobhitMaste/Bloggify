@@ -246,3 +246,107 @@ form{
     height: 94%;
     padding-right: 20px;;
   }
+  @media (max-width: 600px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 12px;
+      margin-right: 12px;
+      gap: 8px;
+    }
+    header p {
+      font-size: 16px;
+      margin-top: 6px;
+    }
+    .gap2 {
+      gap: 6px;
+    }
+    #main-body {
+      margin-top: 16px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .creating-area hr {
+      margin-left: 0;
+    }
+    #title {
+      font-size: 17px;
+      margin-left: 0;
+      padding: 8px;
+    }
+    .blogBody {
+      margin-top: 18px;
+      height: 38vh;
+      background-color: rgb(216, 216, 216);
+      border-radius: 5px;
+    }
+    .blogBody textarea {
+      width: 96%;
+      font-size: 16px;
+      padding: 8px;
+      margin: 0 auto;
+      height: 90%;
+    }
+    .sidebar {
+      margin-left: 0;
+      margin-top: 18px;
+    }
+    #buttons {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sidebar button {
+      width: 100%;
+      font-size: 15px;
+      padding: 10px 0;
+    }
+    .postSettings {
+      margin-top: 26px;
+      font-size: 15px;
+    }
+    #preview-section {
+      grid-template-columns: 1fr;
+      padding: 0;
+    }
+    .profile-sidebar {
+      display: none;
+    }
+    #content {
+      align-items: flex-end;
+      padding: 0;
+      width: 100vw;
+    }
+    .blog-area {
+      width: 98vw;
+      min-width: 0;
+      height: 62vh;
+      margin: 0;
+      border-radius: 8px;
+    }
+    .blog-area div {
+      margin-left: 10px;
+      margin-top: 12px;
+    }
+    .logo-style {
+      height: 54px;
+      border-radius: 12px;
+      margin-top: 0;
+    }
+    #profile-logo {
+      height: 80px;
+      margin-bottom: 12px;
+    }
+    .profile-link, .update-link {
+      font-size: 14px;
+      padding: 6px;
+      border-radius: 12px;
+    }
+    .scrollable-div {
+      height: 90%;
+      padding-right: 8px;
+    }
+  }
+  

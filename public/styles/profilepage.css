@@ -286,3 +286,103 @@ a {
         gap: 15px;
     }
 }
+@media (max-width: 768px) {
+    header .row.flex-center {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    
+    header .col-2, 
+    header .col-2.offset-6,
+    header .col-1.offset-9 {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header img {
+        height: 60px !important;
+        margin: 0 !important;
+    }
+    
+    .sign-out, .login, .xx {
+        margin-top: 1rem !important;
+        text-align: right;
+        width: 100%;
+        padding-right: 1rem;
+    }
+    
+    #body {
+        padding: 1rem !important;
+        gap: 1.5rem !important;
+        flex-direction: column;
+    }
+    
+    #sidebar {
+        width: 100% !important;
+        padding: 1.5rem 1rem !important;
+        position: static !important;
+        margin-top: 0 !important;
+    }
+    
+    #sidebar h4 {
+        font-size: 1.4rem !important;
+    }
+    
+    #sidebar a {
+        font-size: 1rem !important;
+        padding: 0.5rem !important;
+    }
+    
+    .flex-center.gap3 {
+        flex-direction: column;
+        gap: 1.5rem !important;
+        align-items: flex-start;
+    }
+    
+    #profileInfo, .userStats {
+        padding: 1.5rem 1rem !important;
+    }
+    
+    .section-heading {
+        font-size: 1.5rem !important;
+    }
+    
+    .flex-center2 {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+        align-items: flex-start;
+    }
+    
+    .flex-col {
+        flex-direction: row !important;
+        gap: 1rem !important;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    #Posts {
+        padding: 1.5rem 1rem !important;
+    }
+    
+    .blog-card {
+        padding: 1rem !important;
+    }
+    
+    .blog-card__header {
+        font-size: 1.3rem !important;
+    }
+    
+    .photo {
+        height: 60px !important;
+        width: 60px !important;
+        align-self: center;
+    }
+    
+    .flex-center.gap1 {
+        justify-content: flex-start;
+        gap: 1.5rem !important;
+    }
+}
