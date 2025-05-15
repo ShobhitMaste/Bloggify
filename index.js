@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const port = process.env.PORT || 3000;
-const serviceAccount = JSON.parse(fs.readFileSync("/etc/secrets/serviceAccountKey.json", "utf-8"));
+const serviceAccount = JSON.parse(fs.readFileSync("./serviceAccountKey.json", "utf-8"));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
