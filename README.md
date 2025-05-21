@@ -84,10 +84,6 @@ Bloggify/
 
 Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
 ## 📸 Demo Screenshots
 
 Here are some screenshots to give you a glimpse of the Bloggify interface:
@@ -104,6 +100,7 @@ Here are some screenshots to give you a glimpse of the Bloggify interface:
 ### 👤 Profile Page
 ![Profile Page](https://github.com/user-attachments/assets/8fab5831-68b0-4ecf-8ccc-a1e8edac3d09)
 
+## facts 
 ![image](https://github.com/user-attachments/assets/6f70d03f-2b7a-46c9-bd10-f566dffac52b)
   
   2600 total lines of code written
