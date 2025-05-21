@@ -1,8 +1,4 @@
-![image](https://github.com/user-attachments/assets/6f70d03f-2b7a-46c9-bd10-f566dffac52b)
-  
-  2600 total lines of code written
-
-  
+ 
 # Bloggify
 
 **Bloggify** is a full-stack web application that enables users to create, share, and read blog posts. Built using Node.js, Express, HTML, CSS, JavaScript, and Firebase for database management and authentication, it offers a seamless blogging experience.
@@ -88,6 +84,6 @@ Bloggify/
 
 Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-## 📄 License
-
-This project is licensed under the MIT License.
+![image](https://github.com/user-attachments/assets/6f70d03f-2b7a-46c9-bd10-f566dffac52b)
+  
+  2600 total lines of code written
