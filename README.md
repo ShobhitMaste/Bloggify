@@ -84,6 +84,26 @@ Bloggify/
 
 Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 📸 Demo Screenshots
+
+Here are some screenshots to give you a glimpse of the Bloggify interface:
+
+### 🏠 Front Page
+![Front Page](https://github.com/user-attachments/assets/4cc8c008-700b-43c4-ab77-ebae29c2d06c)
+
+### 📰 Blog Collection
+![Blog Collection](https://github.com/user-attachments/assets/351ae922-0ee4-4e5d-add5-fe56b574bce2)
+
+### ✍️ Single Blog Post
+![Blog](https://github.com/user-attachments/assets/2503d0f9-dbfa-468e-aed8-2370a10b9d04)
+
+### 👤 Profile Page
+![Profile Page](https://github.com/user-attachments/assets/8fab5831-68b0-4ecf-8ccc-a1e8edac3d09)
+
 ![image](https://github.com/user-attachments/assets/6f70d03f-2b7a-46c9-bd10-f566dffac52b)
   
   2600 total lines of code written
