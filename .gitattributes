@@ -1,1 +1,3 @@
-public/styles/* linguist-vendored
+public/styles/styles.css linguist-vendored
+public/styles/createBlog.css linguist-vendored
+public/styles/profilepage.css linguist-vendored
